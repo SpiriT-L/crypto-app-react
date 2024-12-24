@@ -1,13 +1,7 @@
 import { Layout } from 'antd';
 import AppHeader from './components/layout/AppHeader';
 import AppSider from './components/layout/AppSider';
-
-const contentStyle = {
-  textAlign: 'center',
-  minHeight: 'calc(100vh - 7.5rem)',
-  color: '#fff',
-  backgroundColor: '#001529',
-};
+import AppContent from './components/layout/AppContent';
 
 const footerStyle = {
   textAlign: 'center',
@@ -22,8 +16,8 @@ export default function App() {
       <Layout>
         <AppHeader />
         <Layout>
-          <AppSider/ >
-          <Layout.Content style={contentStyle}>Content</Layout.Content>
+          <AppSider />
+          <AppContent />
         </Layout>
         <Layout.Footer style={footerStyle}>Footer</Layout.Footer>
       </Layout>
