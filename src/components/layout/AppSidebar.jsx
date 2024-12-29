@@ -2,6 +2,7 @@ import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Layout, List, Spin, Statistic, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { fetchAssets, fetchCrypto } from './api';
+import {percentDifference} from '../../utils'
 
 const sidebarStyle = {
   padding: '1rem',
@@ -15,9 +16,7 @@ const data = [
   'Los Angeles battles huge wildfires.',
 ];
 
-function percentDifference(a, b) {
-  return 100 * Math.abs((a - b) / ((a + b) / 2));
-}
+
 
 export default function AppSidebar() {
   const [loading, setLoading] = useState(false);
