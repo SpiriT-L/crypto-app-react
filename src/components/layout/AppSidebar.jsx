@@ -1,7 +1,7 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Layout, List, Spin, Statistic, Typography, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { percentDifference } from '../../utils';
+import { percentDifference, capitalize } from '../../utils';
 import { fetchAssets, fetchCrypto } from './api';
 
 const sidebarStyle = {
@@ -46,7 +46,7 @@ export default function AppSidebar() {
       {assets.map(asset => (
         <Card key={asset.id} style={{ marginBottom: '1rem' }}>
           <Statistic
-            title={asset.id}
+            title={capitalize(asset.id)}
             value={asset.totalAmount}
             precision={2}
             valueStyle={{
