@@ -1,5 +1,5 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Card, Layout, List, Spin, Statistic, Tag, Typography } from 'antd';
+import { Card, Layout, List, Statistic, Tag, Typography } from 'antd';
 import { useContext } from 'react';
 import CryptoContext from '../../context/crypto-context';
 import { capitalize } from '../utils';
@@ -9,11 +9,7 @@ const sidebarStyle = {
 };
 
 export default function AppSidebar() {
-  const { loading, assets } = useContext(CryptoContext);
-
-  if (loading) {
-    return <Spin fullscreen />;
-  }
+  const { assets } = useContext(CryptoContext);
 
   return (
     <Layout.Sider width='25%' style={sidebarStyle}>
