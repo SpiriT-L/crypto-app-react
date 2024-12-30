@@ -1,41 +1,15 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Card, Layout, List, Spin, Statistic, Typography, Tag } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { percentDifference, capitalize } from '../../utils';
-import { fetchAssets, fetchCrypto } from './api';
+import { Card, Layout, List, Spin, Statistic, Tag, Typography } from 'antd';
+import { useContext } from 'react';
+import CryptoContext from '../../context/crypto-context';
+import { capitalize } from '../utils';
 
 const sidebarStyle = {
   padding: '1rem',
 };
 
 export default function AppSidebar() {
-  const [loading, setLoading] = useState(false);
-  const [crypto, setCrypto] = useState([]);
-  const [assets, setAssets] = useState([]);
-
-  useEffect(() => {
-    async function preload() {
-      setLoading(true);
-      const { result } = await fetchCrypto();
-      const assets = await fetchAssets();
-
-      setAssets(
-        assets.map(asset => {
-          const coin = result.find(c => c.id === asset.id);
-          return {
-            grow: asset.price < coin.price,
-            growPercent: percentDifference(asset.price, coin.price),
-            totalAmount: asset.amount * coin.price,
-            totalProfit: asset.amount * coin.price - asset.amount * asset.price,
-            ...asset,
-          };
-        })
-      );
-      setCrypto(result);
-      setLoading(false);
-    }
-    preload();
-  }, []);
+  const { loading, assets } = useContext(CryptoContext);
 
   if (loading) {
     return <Spin fullscreen />;
