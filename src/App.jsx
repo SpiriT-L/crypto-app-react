@@ -1,20 +1,12 @@
-import { Layout } from 'antd';
-import AppContent from './components/layout/AppContent';
-import AppFooter from './components/layout/AppFooter';
-import AppHeader from './components/layout/AppHeader';
-import AppSidebar from './components/layout/AppSidebar';
+import AppLayout from './components/layout/AppLayout';
+import { CryptoContextProvider } from './context/crypto-context';
 
 export default function App() {
   return (
     <>
-      <Layout>
-        <AppHeader />
-        <Layout>
-          <AppSidebar />
-          <AppContent />
-        </Layout>
-        <AppFooter />
-      </Layout>
+      <CryptoContextProvider>
+        <AppLayout />
+      </CryptoContextProvider>
     </>
   );
 }

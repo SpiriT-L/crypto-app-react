@@ -1,4 +1,4 @@
-import {cryptoData, cryptoAssets} from './../../data';
+import {cryptoData, cryptoAssets} from '../../data';
 
 export function fetchCrypto(){
 return new Promise((resolve) => {
