@@ -1,4 +1,4 @@
-import { Select, Space } from 'antd';
+import { Select, Space, Typography, Flex, Divider } from 'antd';
 import { useState } from 'react';
 import { useCrypto } from '../context/crypto-context';
 
@@ -31,5 +31,19 @@ export default function AddAssetForm() {
     );
   }
 
-  return <form>Form Asset</form>;
+  return (
+    <form>
+      <Flex>
+        <img
+          src={coin.icon}
+          alt={coin.name}
+          style={{ width: 40, marginRight: 10 }}
+        />
+        <Typography.Title level={2} style={{ margin: 0 }}>
+          ({coin.symbol}) {coin.name}
+        </Typography.Title>
+      </Flex>
+      <Divider />
+    </form>
+  );
 }
