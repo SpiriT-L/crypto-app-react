@@ -5,6 +5,7 @@ import {
   Flex,
   Form,
   InputNumber,
+  Result,
   Select,
   Space,
   Typography,
@@ -22,10 +23,26 @@ const validateMessages = {
   },
 };
 
-export default function AddAssetForm() {
+export default function AddAssetForm({ onClose }) {
   const [form] = Form.useForm();
   const { crypto } = useCrypto();
   const [coin, setCoin] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  if (submitted) {
+    return (
+      <Result
+        status='success'
+        title='New Asset Added!'
+        subTitle={`Added ${42} of ${coin.name} by price ${22} `}
+        extra={[
+          <Button type='primary' key='console' onClick={onClose}>
+            Close
+          </Button>,
+        ]}
+      />
+    );
+  }
 
   if (!coin) {
     return (
@@ -54,6 +71,7 @@ export default function AddAssetForm() {
 
   function onFinish(value) {
     console.log('finish', value);
+    setSubmitted(true);
   }
 
   function handleAmountChange(value) {
