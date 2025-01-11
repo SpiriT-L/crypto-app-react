@@ -2,16 +2,15 @@ import {
   Button,
   DatePicker,
   Divider,
-  Flex,
   Form,
   InputNumber,
   Result,
   Select,
   Space,
-  Typography,
 } from 'antd';
 import { useState } from 'react';
 import { useCrypto } from '../context/crypto-context';
+import CoinInfo from './CoinInfo';
 
 const validateMessages = {
   required: '${label} is Required!',
@@ -107,16 +106,7 @@ export default function AddAssetForm({ onClose }) {
       onFinish={onFinish}
       validateMessages={validateMessages}
     >
-      <Flex>
-        <img
-          src={coin.icon}
-          alt={coin.name}
-          style={{ width: 40, marginRight: 10 }}
-        />
-        <Typography.Title level={2} style={{ margin: 0 }}>
-          ({coin.symbol}) {coin.name}
-        </Typography.Title>
-      </Flex>
+      <CoinInfo coin={coin} />
       <Divider />
 
       <Form.Item
