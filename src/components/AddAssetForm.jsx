@@ -1,8 +1,29 @@
-import { Select, Space, Typography, Flex, Divider } from 'antd';
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Flex,
+  Form,
+  InputNumber,
+  Select,
+  Space,
+  Typography,
+} from 'antd';
 import { useState } from 'react';
 import { useCrypto } from '../context/crypto-context';
 
+const validateMessages = {
+  required: '${label} is Required!',
+  types: {
+    number: '${label} in not valid number',
+  },
+  number: {
+    range: '${label} must be between ${min} and ${max}',
+  },
+};
+
 export default function AddAssetForm() {
+  const [form] = Form.useForm();
   const { crypto } = useCrypto();
   const [coin, setCoin] = useState(null);
 
@@ -31,8 +52,43 @@ export default function AddAssetForm() {
     );
   }
 
+  function onFinish(value) {
+    console.log('finish', value);
+  }
+
+  function handleAmountChange(value) {
+    const price = form.getFieldValue('price');
+    form.setFieldsValue({
+      total: +(value * price).toFixed(2),
+    });
+  }
+
+  function handlePriceChange(value) {
+    const amount = form.getFieldValue('amount');
+    form.setFieldsValue({
+      total: +(amount * value).toFixed(2),
+    });
+  }
+
   return (
-    <form>
+    <Form
+      form={form}
+      name='basic'
+      labelCol={{
+        span: 4,
+      }}
+      wrapperCol={{
+        span: 10,
+      }}
+      style={{
+        maxWidth: 600,
+      }}
+      initialValues={{
+        price: coin.price.toFixed(2),
+      }}
+      onFinish={onFinish}
+      validateMessages={validateMessages}
+    >
       <Flex>
         <img
           src={coin.icon}
@@ -44,6 +100,43 @@ export default function AddAssetForm() {
         </Typography.Title>
       </Flex>
       <Divider />
-    </form>
+
+      <Form.Item
+        label='Amount'
+        name='amount'
+        rules={[
+          {
+            required: true,
+            type: 'number',
+            min: 0,
+            max: 1000000,
+          },
+        ]}
+      >
+        <InputNumber
+          placeholder='Enter coin amount'
+          onChange={handleAmountChange}
+          style={{ width: '100%' }}
+        />
+      </Form.Item>
+
+      <Form.Item label='Price' name='price'>
+        <InputNumber onChange={handlePriceChange} style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item label='Date & Time' name='data'>
+        <DatePicker showTime style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item label='Total' name='total'>
+        <InputNumber disabled style={{ width: '100%' }} />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type='primary' htmlType='submit'>
+          Add Asset
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }
